@@ -7,9 +7,11 @@ Player::Player()
 	: GridObject()
 	, m_pendingMove(0,0)
 	, m_moveSound()
+	, m_bumpSound()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("graphics/player/playerStandDown.png"));
 	m_moveSound.setBuffer(AssetManager::GetSoundBuffer("audio/footstep1.ogg"));
+	m_bumpSound.setBuffer(AssetManager::GetSoundBuffer("audio/bump.WAV"));
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -75,9 +77,6 @@ void Player::Update(sf::Time _frameTime)
 			m_moveSound.play();
 		}
 
-		//move in that directions
-		AttemptMove(m_pendingMove);
-
 		//and clear pending movement
 		m_pendingMove = sf::Vector2i(0, 0);
 
@@ -96,8 +95,28 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 
 
 	//TODO: Check if the space is empty
+	//get list of objects in our target postion
+	std::vector<GridObject*> targetCellContents = m_level->GetObjectAt(targetPos);
+
+	//Go thru list and see if any objects block movement
+	bool blocked = false;
+	for (int i = 0; i < targetCellContents.size(); ++i)
+	{
+		if (targetCellContents[i]->getBlocksMovement() == true)
+		{
+			blocked = true;
+			m_bumpSound.play();
+		}
+	}
+	
 
 	//if empty, move there
-	return m_level->MoveObjectTo(this, targetPos);
+
+	if (blocked == false)
+		return m_level->MoveObjectTo(this, targetPos);
+		
+
+	//If movement is blocked. do nothing, return false
+	return false;
 
 }

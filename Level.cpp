@@ -274,3 +274,23 @@ bool Level::MoveObjectTo(GridObject* _toMove, sf::Vector2i _targetPos)
 	//return failure
 	return false;
 }
+
+std::vector< GridObject* > Level::GetObjectAt(sf::Vector2i _targetPos)
+{
+	//Dont trust the data!
+	//AKA make sure co-ords are within vector size
+	if (_targetPos.y >= 0 && _targetPos.y < m_contents.size()
+		&& _targetPos.x >= 0 && _targetPos.x < m_contents[_targetPos.y].size())
+	
+	{
+		//Get the contents
+		//return them
+		return m_contents[_targetPos.y][_targetPos.x];
+	}
+
+	//Default return
+	//return an empty vector with nothing in it
+	//(default constructor)
+	return std::vector<GridObject*>();
+
+}
