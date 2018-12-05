@@ -5,10 +5,11 @@
 
 Player::Player()
 	: GridObject()
-	, m_pendingMove()
+	, m_pendingMove(0,0)
+	, m_moveSound()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("graphics/player/playerStandDown.png"));
-
+	m_moveSound.setBuffer(AssetManager::GetSoundBuffer("audio/footstep1.ogg"));
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -66,11 +67,20 @@ void Player::Update(sf::Time _frameTime)
 	// if we have movement waiting to be processed
 	if (m_pendingMove.x != 0 || m_pendingMove.y != 0)
 	{
+
+		bool moveSuccessful = AttemptMove(m_pendingMove);
+
+		if (moveSuccessful == true)
+		{
+			m_moveSound.play();
+		}
+
 		//move in that directions
 		AttemptMove(m_pendingMove);
 
 		//and clear pending movement
 		m_pendingMove = sf::Vector2i(0, 0);
+
 
 	}
 	
