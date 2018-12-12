@@ -8,10 +8,13 @@ Player::Player()
 	, m_pendingMove(0,0)
 	, m_moveSound()
 	, m_bumpSound()
+	
+
 {
 	m_sprite.setTexture(AssetManager::GetTexture("graphics/player/playerStandDown.png"));
 	m_moveSound.setBuffer(AssetManager::GetSoundBuffer("audio/footstep1.ogg"));
 	m_bumpSound.setBuffer(AssetManager::GetSoundBuffer("audio/bump.WAV"));
+
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -138,6 +141,7 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 			 {
 				 //Move to new spot (where blocker was)
 				 return m_level->MoveObjectTo(this, targetPos);
+				
 
 			 }
 
