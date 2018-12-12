@@ -8,7 +8,7 @@ Box::Box()
 
 {
 	m_sprite.setTexture(AssetManager::GetTexture("graphics/box.png"));
-	m_boxMoveSound.setBuffer(AssetManager::GetSoundBuffer("audio/bump.WAV"));
+	m_boxMoveSound.setBuffer(AssetManager::GetSoundBuffer("audio/push.WAV"));
 	m_blocksMovement = true;
 }
 
