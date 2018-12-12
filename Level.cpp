@@ -4,6 +4,7 @@
 #include "Wall.h"
 #include "Storage1.h"
 #include "Player.h"
+#include "Box.h"
 
 // Library Includes
 #include <iostream>
@@ -206,6 +207,14 @@ void Level::LoadLevel(int _levelToLoad)
 				player->SetLevel(this);
 				player->SetGridPosition(x, y);
 				m_contents[y][x].push_back(player);
+			}
+
+			else if (ch == 'B')
+			{
+				Box* box = new Box();
+				box->SetLevel(this);
+				box->SetGridPosition(x, y);
+				m_contents[y][x].push_back(box);
 			}
 			else
 			{
