@@ -15,8 +15,11 @@ public:
 
 	bool AttemptPush(sf::Vector2i _direction);
 
+	bool GetStored();
+
 private:
 
+	bool m_stored;
 	sf::Sound m_boxMoveSound;
-
+	sf::Sound m_boxStoredSound;
 };
